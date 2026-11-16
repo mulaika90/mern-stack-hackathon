@@ -14,10 +14,13 @@ npm install
 npm run dev
 ```
 
-The Vite dev server proxies `/api` requests to `http://localhost:3000`. Start
-the Express backend on that port to use authentication, profile editing, and
-clinic features. Patients can sign up publicly; staff sign in with accounts
-provisioned by the administrator.
+API requests use the hosted backend at
+`https://mern-stack-hackathon-snowy.vercel.app` in production. During local
+development, Vite proxies `/api` to `http://localhost:3000` so browser auth
+cookies remain same-origin; start the local backend before signing in. Set
+`VITE_API_PROXY_TARGET` to use a different development backend, or
+`VITE_API_BASE_URL` to use another API directly. Patients can sign up publicly;
+staff sign in with accounts provisioned by the administrator.
 
 ## Validate and build
 

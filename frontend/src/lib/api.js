@@ -1,9 +1,14 @@
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL ??
+  (import.meta.env.DEV ? "" : "https://mern-stack-hackathon-snowy.vercel.app")
+).replace(/\/+$/, "");
+
 export async function api(path, options = {}) {
   let response;
   const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
   try {
-    response = await fetch(path, {
-      credentials: "same-origin",
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      credentials: "include",
       ...options,
       headers: {
         ...(options.body && !isFormData ? { "Content-Type": "application/json" } : {}),

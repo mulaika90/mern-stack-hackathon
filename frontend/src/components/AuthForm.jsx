@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FormField from "./FormField.jsx";
+import { api, jsonRequest } from "../lib/api.js";
 
 const initialValues = {
   username: "",
@@ -121,39 +122,10 @@ export default function AuthForm({ mode }) {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
+      await api(
         isSignup ? "/api/auth/register" : "/api/auth/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        },
+        jsonRequest("POST", payload),
       );
-      const contentType = response.headers.get("content-type") ?? "";
-      let result = {};
-
-      if (contentType.includes("application/json")) {
-        try {
-          result = await response.json();
-        } catch {
-          throw new Error("The authentication server returned an invalid response.");
-        }
-      } else if (!response.ok && response.status >= 500) {
-        throw new Error(
-          "The authentication server is unavailable. Check the backend terminal. If it reports “bad auth,” update MONGODB_URI with a valid MongoDB Atlas database user and restart the backend.",
-        );
-      } else {
-        throw new Error(
-          `The authentication server returned an unexpected response (HTTP ${response.status}).`,
-        );
-      }
-
-      if (!response.ok) {
-        throw new Error(
-          result.message ||
-            `We couldn't complete your request (HTTP ${response.status}). Please try again.`,
-        );
-      }
 
       setFeedback({
         mode,
