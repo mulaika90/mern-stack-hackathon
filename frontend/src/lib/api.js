@@ -3,11 +3,16 @@ const API_BASE_URL = (
   (import.meta.env.DEV ? "" : "https://mern-stack-hackathon-snowy.vercel.app")
 ).replace(/\/+$/, "");
 
+export function apiUrl(path) {
+  if (!path || !path.startsWith("/") || path.startsWith("//")) return path;
+  return `${API_BASE_URL}${path}`;
+}
+
 export async function api(path, options = {}) {
   let response;
   const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
   try {
-    response = await fetch(`${API_BASE_URL}${path}`, {
+    response = await fetch(apiUrl(path), {
       credentials: "include",
       ...options,
       headers: {

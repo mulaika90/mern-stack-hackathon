@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import Swal from "sweetalert2";
-import { api, jsonRequest } from "../lib/api.js";
+import { api, apiUrl, jsonRequest } from "../lib/api.js";
 import ThemeToggle from "./ThemeToggle.jsx";
 
 function showToast(icon, title, text, theme = "dark") {
@@ -55,7 +55,7 @@ function initials(name = "") {
 function Avatar({ name, image, className = "mini-avatar" }) {
   return (
     <span className={`${className}${image ? " has-image" : ""}`}>
-      {image ? <img src={image} alt="" /> : initials(name)}
+      {image ? <img src={apiUrl(image)} alt="" /> : initials(name)}
     </span>
   );
 }

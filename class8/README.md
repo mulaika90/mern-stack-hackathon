@@ -8,15 +8,19 @@
 3. Set `JWT_SECRET` to a random secret with at least 32 characters.
 4. Set `IMAGEKIT_PRIVATE_KEY` if you use product image uploads. Profile images
    are stored in MongoDB and do not require ImageKit.
-5. To create the first clinic administrator, set `ADMIN_USERNAME`,
+5. Set `FRONTEND_ORIGINS` to the comma-separated frontend origins allowed to
+   call the API. It defaults to
+   `https://mern-stack-hackathon-7xqr.vercel.app`. Production session cookies
+   are configured for cross-origin HTTPS requests.
+6. To create the first clinic administrator, set `ADMIN_USERNAME`,
    `ADMIN_EMAIL`, and a unique `ADMIN_PASSWORD` (at least 12 characters). The
    account is created on startup and its username/password are synchronized
    from these settings; leave them unset to skip seeding.
-6. Optionally seed one doctor by setting `DOCTOR_USERNAME`, `DOCTOR_EMAIL`,
+7. Optionally seed one doctor by setting `DOCTOR_USERNAME`, `DOCTOR_EMAIL`,
    and `DOCTOR_PASSWORD` (at least 8 characters). The account is created and
    its configured credentials are synchronized on startup.
    `DOCTOR_SPECIALIZATION` and `DOCTOR_EXPERIENCE` are optional.
-7. Start the server with `npm start`.
+8. Start the server with `npm start`.
 
 The server connects to MongoDB before listening on port 3000. If the URI is
 missing or invalid, startup prints the connection error and exits instead of

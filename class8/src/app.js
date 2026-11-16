@@ -1,4 +1,5 @@
 import express  from "express";
+import cors from "cors";
 import { fileURLToPath } from "node:url";
 import authRoutes from "./routes/auth.routes.js";
 import productRoutes from "./routes/product.routes.js";
@@ -8,6 +9,25 @@ import appointmentRoutes from "./routes/appointment.routes.js";
 import notificationRoutes from "./routes/notifications.routes.js";
 import cookieParser from "cookie-parser";
 const app = express();
+const allowedOrigins = new Set(
+    (
+        process.env.FRONTEND_ORIGINS
+        || "https://mern-stack-hackathon-7xqr.vercel.app"
+    )
+        .split(",")
+        .map((origin) => origin.trim().replace(/\/+$/, ""))
+        .filter(Boolean)
+);
+
+app.use(cors({
+    origin(origin, callback) {
+        if (!origin || allowedOrigins.has(origin)) {
+            return callback(null, true);
+        }
+        return callback(null, false);
+    },
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 

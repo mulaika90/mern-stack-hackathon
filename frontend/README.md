@@ -19,8 +19,11 @@ API requests use the hosted backend at
 development, Vite proxies `/api` to `http://localhost:3000` so browser auth
 cookies remain same-origin; start the local backend before signing in. Set
 `VITE_API_PROXY_TARGET` to use a different development backend, or
-`VITE_API_BASE_URL` to use another API directly. Patients can sign up publicly;
-staff sign in with accounts provisioned by the administrator.
+`VITE_API_BASE_URL` to use another API directly. The backend allows the
+deployed frontend origin `https://mern-stack-hackathon-7xqr.vercel.app` by
+default; configure `FRONTEND_ORIGINS` on the backend deployment if the frontend
+origin changes. Patients can sign up publicly; staff sign in with accounts
+provisioned by the administrator.
 
 ## Validate and build
 

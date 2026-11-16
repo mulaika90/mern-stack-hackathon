@@ -11,11 +11,12 @@ function issueToken(user, res) {
         process.env.JWT_SECRET,
         { expiresIn: "7d" }
     );
+    const isProduction = process.env.NODE_ENV === "production";
 
     res.cookie("token", token, {
         httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
+        sameSite: isProduction ? "none" : "lax",
+        secure: isProduction,
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -186,10 +187,11 @@ export async function getProfileImage(req, res) {
 }
 
 export function logoutUser(_req, res) {
+    const isProduction = process.env.NODE_ENV === "production";
     res.clearCookie("token", {
         httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production"
+        sameSite: isProduction ? "none" : "lax",
+        secure: isProduction
     });
     return res.status(200).json({ message: "You have been signed out." });
 }
